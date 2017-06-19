@@ -42,11 +42,11 @@ module.exports.chrome = (event, context, callback) => {
           DOM.getDocument()
           .then((document) => {
             return DOM.getOuterHTML({nodeId: 1});
-          //}).then((data) => {
-            // return axios.post(destURL, {
-            //   page: data
-            // });
           }).then((data) => {
+            return axios.post(destURL, {
+              page: data
+            });
+          }).then(() => {
             console.log('called endpoint');
             return client.close().then(() => {
               callback(null, {
