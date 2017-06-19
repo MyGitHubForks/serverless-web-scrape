@@ -20,12 +20,17 @@ if(!sourceURL || !destURL) {
     destURL: destURL
   };
 
-  fs.writeFileSync('./data.json', JSON.stringify(data) , 'utf-8'); 
-  exec('serverless invoke --function chrome --log -p ./data.json', (err, stdout, stderr) => {
-    if (err) {
-      console.error(err);
-      return;
+  fs.writeFile('./data.json', JSON.stringify(data) , 'utf-8', (error)=>{
+    if(error){
+      throw error;
     }
-    console.log(stdout);
-  });
+    exec('serverless invoke --function chrome --log -p data.json', (err, stdout, stderr) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(stdout);
+    });
+  }); 
+  
 }

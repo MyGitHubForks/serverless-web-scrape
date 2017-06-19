@@ -43,8 +43,15 @@ module.exports.chrome = (event, context, callback) => {
           .then((document) => {
             return DOM.getOuterHTML({nodeId: 1});
           }).then((data) => {
-            return axios.post(destURL, {
-              page: data
+            const payLoad = {page: data};
+            const length = payLoad.length;
+            console.log(length);
+            return axios.post(destURL,
+              payLoad
+              ,{
+              headers: {
+                'Content-Type': 'application/json'
+              }
             });
           }).then(() => {
             console.log('called endpoint');
